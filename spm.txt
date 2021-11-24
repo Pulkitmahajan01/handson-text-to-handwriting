@@ -1,0 +1,24 @@
+﻿SPM ASSIGNMENT
+NAME: PULKIT MAHAJAN
+ROLLNO: UE188074
+
+
+1. Assume that you are the project manager for a company that builds software for household robots. You have been contracted to build the software for a robot that mows the lawn for a homeowner. Write a statement of scope that describes the software. Be sure your statement of scope is bounded. If you're unfamiliar with robots, do a bit of research before you begin writing. Also, state your assumptions about the hardware that will be required. Alternate: Replace the lawn mowing robot with another problem that is of interest to you.
+
+Ans - The security systems installed in the house supports the Home security system. Protects the home from burglars through the use of burglar alarm. It controls the locks by remote control and also detects fire with the help of advanced smoke detectors.
+
+The important aspect of home security is Simulating the presence of the homeowners. In addition, A rich variety of sensors to coordinate,monitor and control as well as emergency notification features is a home security and safety system. The primary user, a homeowner, can define the sequence of lighting, radios, CD players, televisions, security and safety events. For satisfying the homeowner This system will provide these functions.
+By using existing alarm monitoring networks this system is designed to be installed by alarm companies and licensed contractors and monitored.
+
+2. Software project complexity is discussed briefly in Section 26.1. Develop a list of software characteristics (e.g., concurrent operation, graphical output) that affect the complexity of a project. Prioritize the list.
+
+Ans - The list of software characteristics that affect the complexity of a project are as following - 
+i) Project size.
+ii) Degree of structural uncertainty.
+iii) Availability of historical information.
+
+Some more specific examples that might make a project more complex are as following - 
+
+i) Connection to a database over the internet or WAN.
+ii) Connection to legacy equipment (e.g. older manufacturing equipment) for transfer of measurement data or statistical data from this equipment to the new system.
+iii) Connection to apps developed in legacy software or programming languages.

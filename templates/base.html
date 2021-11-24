@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <meta charset="utf-8">
+    <title>Text-to-Handwriting</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+  </head>
+    <body>
+      <div class="wrapper">
+        <header>Text-to-Handwriting</header>
+        <form action="">
+          <input class="file-input" type="file" name="file" accept=".pdf,.txt,.docx" hidden>
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>Browse File to Upload</p>
+        </form>
+        <section class="progress-area"></section>
+        <section class="uploaded-area"></section>
+        <button id="process"> Process</button>
+      </div>
+      <script type="text/javascript"
+              src="{{ url_for('static', filename='script.js') }}"></script>
+      <div class="container">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </body>
+
+</html>
