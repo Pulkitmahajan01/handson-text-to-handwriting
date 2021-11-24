@@ -1,10 +1,7 @@
 # imports
-import tempfile
-from fpdf import FPDF
 from PIL import Image
 import pdfplumber
 import docx
-import os
 
 
 def writee(char):
@@ -59,8 +56,8 @@ def worddd(Input, sizeOfSheet, allowedChars):
 
 
 def magicWand(filePath, extension):
-    print("Filepath is: ", filePath)
-    print("Extension is: ", extension)
+    #print("File path: ", filePath)
+    #print("Extension: ", extension)
     global bg, x, y
     bg = Image.open("myfont/bg.png")
     sizeOfSheet = bg.width
@@ -70,7 +67,7 @@ def magicWand(filePath, extension):
     data = ""
 
     if extension == "txt":
-        with open(filePath, 'r', encoding="mbcs") as file:
+        with open(filePath, 'r') as file:
             dataT = file.read()
             data += dataT
         file.close()
@@ -91,8 +88,6 @@ def magicWand(filePath, extension):
         print("Extension not supported!!")
 
     # print(data)
-    #print("Directory is: ", tempfile.gettempdir())
-    os.remove(filePath)
     l = len(data)
     nn = len(data)//600
     chunks, chunk_size = len(data), len(data)//(nn+1)
@@ -101,7 +96,7 @@ def magicWand(filePath, extension):
     for i in range(0, len(p)):
         worddd(p[i], sizeOfSheet, allowedChars)
         writee('\n')
-        bg.save(str(tempfile.gettempdir())+'\%dout.png' % i)
+        bg.save('%dout.png' % i)
         bg1 = Image.open(
             "myfont/bg.png")
         bg = bg1

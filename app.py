@@ -2,7 +2,6 @@
 # to activate virtual environment in windows & f:/allora/venv/Scripts/Activate.ps1
 import os
 import img2pdf
-import tempfile
 from os import name
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 import magic
@@ -11,7 +10,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 ALLOWED_EXTENSIONS = {'pdf', 'txt', 'docx'}
-UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/tmp/'
+UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/uploads/'
 DOWNLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + '/downloads/'
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -34,58 +33,32 @@ def index():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = file.filename
-            #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            file.save(os.path.join(tempfile.gettempdir(), filename))
-            activator(os.path.join(tempfile.gettempdir(), filename),
-                      filename.rsplit('.', 1)[1].lower())
-            #activator(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename.rsplit('.', 1)[1].lower())
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            activator(os.path.join(
+                app.config['UPLOAD_FOLDER'], filename), filename.rsplit('.', 1)[1].lower())
             createPDF()
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
     return render_template("index.html")
 
 
-@app.route('/'+str(tempfile.gettempdir())+'<filename>')
+@app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(tempfile.gettempdir(), "output.pdf", as_attachment=True)
-
-
-def createPDF():
-    path = str(tempfile.gettempdir())+"\output.pdf"
-    #oPath = str(tempfile.gettempdir())
-    # lit="\\"
-    #oPath = "".join([oPath,lit])
-    #path = os.path.join(tempfile.gettempdir(), "output.pdf")
-    # with open("tmp/output.pdf", "wb") as f:
-    # with open(path, "wb") as f:
-    # f.write(img2pdf.convert(
-    # [i for i in os.listdir(str(tempfile.gettempdir())) if i.endswith(".png")]))
-
-    dirname = str(tempfile.gettempdir())
-    imgs = []
-    for fname in os.listdir(dirname):
-        if not fname.endswith(".png"):
-            continue
-        pat = os.path.join(dirname, fname)
-        if os.path.isdir(pat):
-            continue
-        imgs.append(pat)
-    with open(path, "wb") as f:
-        f.write(img2pdf.convert(imgs))
-
-    # deleting png files created
-    for f in imgs:
-        os.remove(os.path.join("", f))
-
-    # deleting png files created
-    # filelist = [f for f in os.listdir(
-    # str(tempfile.gettempdir())+"\\") if f.endswith(".png")]
-    # for f in filelist:
-    #os.remove(os.path.join(tempfile.gettempdir(), f))
+    return send_from_directory("", "output.pdf", as_attachment=True)
 
 
 def activator(filePath, extension):
     magic.magicWand(filePath, extension)
-    # os.remove(filePath)
+
+
+def createPDF():
+    with open("output.pdf", "wb") as f:
+        f.write(img2pdf.convert(
+            [i for i in os.listdir('.') if i.endswith(".png")]))
+    # deleting png files created
+    filelist = [f for f in os.listdir('.') if f.endswith(".png")]
+    for f in filelist:
+        os.remove(os.path.join('.', f))
 
 
 if __name__ == "__main__":
